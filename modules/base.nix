@@ -28,6 +28,8 @@
   boot.initrd.luks.devices.cryptroot = {
     allowDiscards = true;
     preLVM = true;
+    # TPM2 unlock via systemd crypttabExtraOpts
+    crypttabExtraOpts = [ "tpm2-device=auto" ];
   };
 
   boot.initrd.services.lvm.enable = true;
@@ -40,7 +42,6 @@
     autoGenerateKeys.enable = true;
     autoEnrollKeys = {
       enable = true;
-      # Automatically reboot to enroll the keys in the firmware
       autoReboot = true;
     };
   };
@@ -59,9 +60,12 @@
 
   environment.systemPackages = map lib.lowPrio [
     pkgs.sbctl
+    pkgs.tpm2-tools
+    pkgs.tpm2-luks
     pkgs.curl
     pkgs.gitMinimal
     pkgs.bash
+    pkgs.libtss2
   ];
 
   users.users.qt1.shell = pkgs.bash;
