@@ -47,6 +47,14 @@
 
   boot.initrd.systemd.enable = true;
 
+  nix.settings = {
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+    trusted-users = [ "root" "quentin" ];
+  };
+
   services.openssh.enable = true;
 
   environment.systemPackages = map lib.lowPrio [
