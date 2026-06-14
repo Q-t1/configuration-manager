@@ -10,6 +10,16 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    noctalia = {
+      url = "github:noctalia-dev/noctalia/legacy-v4";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixos-facter-modules.url = "github:numtide/nixos-facter-modules";
   };
 
@@ -18,6 +28,8 @@
       nixpkgs,
       disko,
       lanzaboote,
+      home-manager,
+      noctalia,
       nixos-facter-modules,
       ...
     }:
@@ -38,6 +50,8 @@
             lanzaboote.nixosModules.lanzaboote
             disko.nixosModules.disko
             ./modules/base.nix
+            ./modules/niri.nix
+            ./modules/noctalia.nix
             ./hosts/${name}
           ] ++ extraModules;
         };

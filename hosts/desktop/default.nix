@@ -4,6 +4,11 @@
     ./disk-config.nix
   ];
 
+  nix.settings = {
+    extra-substituters = [ "https://noctalia.cachix.org" ];
+    extra-trusted-public-keys = [ "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4=" ];
+  };
+
   networking.hostName = "desktop-qt1";
   networking.wireless.enable = true;
 
@@ -91,6 +96,25 @@
     ];
   };
 
+  programs.git = {
+    enable = true;
+
+    config = {
+      user = {
+        name = "qt1";
+        email = "quentin.roccia@gmail.com";
+      };
+      core.autocrlf = "input";
+      core.eol = "lf";
+      push.autoSetupRemote = true;
+      push.default = "current";
+      init.defaultBranch = "main";
+    };
+  };
+
+  # Install Niri
+  programs.niri.enable = true;
+
   # Install firefox.
   programs.firefox.enable = true;
 
@@ -101,6 +125,5 @@
   services.openssh.enable = true;
 
   system.stateVersion = "26.05";
-
 
 }
