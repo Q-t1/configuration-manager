@@ -10,20 +10,17 @@
   ];
 
   boot.initrd.availableKernelModules = [
-    "virtio_blk"      # KVM disque
-    "virtio_pci"      # KVM PCIe
-    "virtio_scsi"     # KVM SCSI
-    "vmw_pvscsi"      # VMware (optionnel)
-    "sd_mod"          # Générique SCSI disk
-    "sr_mod"          # Générique CD-ROM
-    "ahci"            # Générique SATA
-    "xhci_pci"        # Générique USB 3.0
-    "kvm_intel"       # Virtualisation Intel
+    "xhci_pci"
+    "ahci"
+    "nvme"
+    "usbhid"
+    "usb_storage"
+    "sd_mod"
   ];
 
-  boot.initrd.kernelModules = [ "virtio_scsi" ];
+  boot.initrd.kernelModules = [ "" ];
 
-  boot.kernelParams = [ "module.sig_enforce=0" ];
+  boot.kernelModules = [ "kvm-intel" ];
 
   boot.loader.systemd-boot.enable = lib.mkForce false;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -59,13 +56,13 @@
     pkgs.bash
   ];
 
-  users.users.root.shell = pkgs.bash;
+  users.users.qt1.shell = pkgs.bash;
 
   console.keyMap = "fr";
 
-  users.users.root.openssh.authorizedKeys.keys = [
+  users.users.qt1.openssh.authorizedKeys.keys = [
     "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBBqSbEXb7nSmu2vAl99sDH0Di4YMH0foOiv0XSywfcIAWqqXE7twoateg/1AiVoNSE5nHfLL791XxUcQ5lPYHLM= qt1@nixos"
   ];
 
-  system.stateVersion = "25.11";
+  system.stateVersion = "26.05";
 }
