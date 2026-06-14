@@ -1,4 +1,4 @@
-{ modulesPath, lib, ... } @ args:
+{ modulesPath, lib, pkgs, ... } @ args:
 {
   imports = [
     ./disk-config.nix
