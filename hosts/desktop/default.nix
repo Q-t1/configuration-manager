@@ -89,6 +89,7 @@
       vim
       gnutar
       git
+      zed-editor
     ];
     hashedPassword = "$6$mX3KybIzvY4Kcl/Y$LN5lcc5iefNmKDSitgRd84GXdJ5VMup/DPLojazNMD8Yj/AAuRxnd0CsYxEmmQX7TEMHBA7AbN96yMWQ25IKY0";
     openssh.authorizedKeys.keys = [
@@ -113,7 +114,34 @@
   };
 
   # Install Niri
-  programs.niri.enable = true;
+  programs.niri = {
+    enable = true;
+
+    # Noctalia autostart
+    settings.spawn-at-startup = [
+      "qs" "-c" "noctalia-shell"
+    ];
+
+    # Outputs
+    settings.outputs = {
+      "eDP-1" = {
+        scale = 1.0;
+        position = { x = 0; y = 0; };
+      };
+    };
+
+    # Keybindings
+    settings.binds = {
+      "Super T" = { spawn = "alacritty"; };
+      "Super D" = { spawn = "fuzzel"; };
+      "Super L" = { spawn = "swaylock"; };
+    };
+  };
+
+  # Noctalia package (system-level)
+  environment.systemPackages = with pkgs; [
+    inputs.noctalia.packages.${pkgs.system}.default
+  ];
 
   # Install firefox.
   programs.firefox.enable = true;
