@@ -5,5 +5,5 @@ nix run github:nix-community/nixos-anywhere -- --flake .#desktop --generate-hard
 ```
 
 ```
-nix run github:nix-community/nixos-anywhere -- --flake .#generic --vm-test
+nixos-rebuild switch --flake .#desktop --target-host user@ip --sudo --ask-sudo-password
 ```
