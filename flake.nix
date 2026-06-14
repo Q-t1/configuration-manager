@@ -44,12 +44,8 @@
     in
     {
       nixosConfigurations = {
-        # nix run github:nix-community/nixos-anywhere -- --flake .#nixrunner_01 --generate-hardware-config nixos-generate-config ./hosts/nixrunner_01/hardware-configuration.nix <hostname>
-        nixbuilder = mkHost {
-          name = "nixbuilder";
-        };
-        nixrunner_01 = mkHost {
-          name = "nixrunner_01";
+        desktop = mkHost {
+          name = "desktop";
         };
       };
     };
