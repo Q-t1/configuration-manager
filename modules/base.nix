@@ -1,5 +1,6 @@
 {
   modulesPath,
+  config,
   lib,
   pkgs,
   ...
@@ -53,7 +54,7 @@
       "nix-command"
       "flakes"
     ];
-    trusted-users = [ "root" "quentin" ];
+    trusted-users = [ "qt1" ];
   };
 
   services.openssh.enable = true;
@@ -61,11 +62,11 @@
   environment.systemPackages = map lib.lowPrio [
     pkgs.sbctl
     pkgs.tpm2-tools
-    pkgs.tpm2-luks
+    pkgs.tpm-luks
     pkgs.curl
     pkgs.gitMinimal
     pkgs.bash
-    pkgs.libtss2
+    pkgs.tpm2-tss
   ];
 
   users.users.qt1.shell = pkgs.bash;

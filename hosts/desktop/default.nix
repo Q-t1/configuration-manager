@@ -28,6 +28,24 @@
     LC_TIME = "fr_FR.UTF-8";
   };
 
+  # Enable graphics
+  hardware.graphics.enable = true;
+
+  # Set NVIDIA as video driver
+  services.xserver.videoDrivers = [ "nvidia" ];
+
+  # NVIDIA driver settings
+  hardware.nvidia = {
+    # RTX 20-series+ supports open module (required for driver 560+)
+    open = true;
+
+    # Enable kernel mode setting (required for Wayland)
+    modesetting.enable = true;
+
+    # Enable NVIDIA settings tool
+    nvidiaSettings = true;
+  };
+
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
