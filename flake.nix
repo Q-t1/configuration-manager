@@ -57,7 +57,6 @@
           modules = [
             disko.nixosModules.disko
             lanzaboote.nixosModules.lanzaboote
-            niri.nixosModules.niri
             ./modules/base.nix
             #./modules/noctalia.nix
             ./hosts/${name}
@@ -66,7 +65,12 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.qt1.home.stateVersion = "26.05";
+              home-manager.users.qt1 = import ./modules/home.nix;
+              home-manager.extraSpecialArgs = { inherit inputs; };
+              home-manager.sharedModules = [
+                niri.homeModules.niri
+                noctalia.homeModules.default
+              ];
             }
           ] ++ extraModules;
         };

@@ -1,4 +1,4 @@
-{ modulesPath, inputs, lib, pkgs, ... } @ args:
+{ modulesPath, config, inputs, lib, pkgs, ... } @ args:
 {
   imports = [
     ./disk-config.nix
@@ -76,6 +76,7 @@
       gnutar
       git
       zed-editor
+      alacritty
     ];
     hashedPassword = "$6$mX3KybIzvY4Kcl/Y$LN5lcc5iefNmKDSitgRd84GXdJ5VMup/DPLojazNMD8Yj/AAuRxnd0CsYxEmmQX7TEMHBA7AbN96yMWQ25IKY0";
     openssh.authorizedKeys.keys = [
@@ -98,46 +99,23 @@
     };
   };
 
-  # Install Niri
-  programs.niri = {
+  services.greetd = {
     enable = true;
+    settings = {
+      default_session = {
+        command = "${config.programs.niri.package}/bin/niri-session";
+        user = "qt1";
+      };
+    };
   };
+
+  # Recommended by niri docs when using the user service
+  systemd.user.services.niri.enableDefaultPath = false;
 
   # Noctalia package
   environment.systemPackages = with pkgs; [
     inputs.noctalia.packages.${pkgs.system}.default
   ];
-
-  home-manager.users.qt1 = {
-    xdg.configFile."niri/config.kdl".source = pkgs.writeText "config.kdl" ''
-      # Noctalia autostart
-      spawn-at-startup "qs" "-c" "noctalia-shell"
-
-      # Outputs
-      outputs {
-        "eDP-1" {
-          scale = 1.0;
-          position = { x = 0; y = 0; };
-        }
-      }
-
-      # Keybindings
-      binds = {
-        "Super T" { spawn = "alacritty"; }
-        "Super D" { spawn = "fuzzel"; }
-        "Super L" { spawn = "swaylock"; }
-      }
-
-      # Layout
-      layout {
-        border = 3;
-        focus-ring = {
-          width = 5;
-          active.color = "#lavender";
-        };
-      }
-    '';
-  };
 
   # Install firefox.
   programs.firefox.enable = true;
