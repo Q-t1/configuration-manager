@@ -1,4 +1,4 @@
-{ modulesPath, lib, pkgs, ... } @ args:
+{ modulesPath, inputs, lib, pkgs, ... } @ args:
 {
   imports = [
     ./disk-config.nix
@@ -43,25 +43,10 @@
   hardware.nvidia = {
     # RTX 20-series+ supports open module (required for driver 560+)
     open = true;
-
     # Enable kernel mode setting (required for Wayland)
     modesetting.enable = true;
-
     # Enable NVIDIA settings tool
     nvidiaSettings = true;
-  };
-
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "fr";
-    variant = "";
   };
 
   # Configure console keymap
@@ -86,6 +71,7 @@
       "networkmanager"
     ];
     packages = with pkgs; [
+      quickshell
       vim
       gnutar
       git
@@ -99,7 +85,6 @@
 
   programs.git = {
     enable = true;
-
     config = {
       user = {
         name = "qt1";
@@ -116,32 +101,43 @@
   # Install Niri
   programs.niri = {
     enable = true;
-
-    # Noctalia autostart
-    settings.spawn-at-startup = [
-      "qs" "-c" "noctalia-shell"
-    ];
-
-    # Outputs
-    settings.outputs = {
-      "eDP-1" = {
-        scale = 1.0;
-        position = { x = 0; y = 0; };
-      };
-    };
-
-    # Keybindings
-    settings.binds = {
-      "Super T" = { spawn = "alacritty"; };
-      "Super D" = { spawn = "fuzzel"; };
-      "Super L" = { spawn = "swaylock"; };
-    };
   };
 
-  # Noctalia package (system-level)
+  # Noctalia package
   environment.systemPackages = with pkgs; [
     inputs.noctalia.packages.${pkgs.system}.default
   ];
+
+  home-manager.users.qt1 = {
+    xdg.configFile."niri/config.kdl".source = pkgs.writeText "config.kdl" ''
+      # Noctalia autostart
+      spawn-at-startup "qs" "-c" "noctalia-shell"
+
+      # Outputs
+      outputs {
+        "eDP-1" {
+          scale = 1.0;
+          position = { x = 0; y = 0; };
+        }
+      }
+
+      # Keybindings
+      binds = {
+        "Super T" { spawn = "alacritty"; }
+        "Super D" { spawn = "fuzzel"; }
+        "Super L" { spawn = "swaylock"; }
+      }
+
+      # Layout
+      layout {
+        border = 3;
+        focus-ring = {
+          width = 5;
+          active.color = "#lavender";
+        };
+      }
+    '';
+  };
 
   # Install firefox.
   programs.firefox.enable = true;

@@ -23,7 +23,7 @@
     };
 
     noctalia = {
-      url = "github:noctalia-dev/noctalia/legacy-v4";
+      url = "github:noctalia-dev/noctalia";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -59,13 +59,14 @@
             lanzaboote.nixosModules.lanzaboote
             niri.nixosModules.niri
             ./modules/base.nix
-            ./modules/noctalia.nix
+            #./modules/noctalia.nix
             ./hosts/${name}
             # Module Home Manager (NixOS)
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
+              home-manager.users.qt1.home.stateVersion = "26.05";
             }
           ] ++ extraModules;
         };
