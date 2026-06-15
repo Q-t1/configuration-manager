@@ -17,11 +17,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    niri = {
-      url = "github:sodiboo/niri-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     noctalia = {
       url = "github:noctalia-dev/noctalia";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -36,7 +31,6 @@
       disko,
       lanzaboote,
       home-manager,
-      niri,
       noctalia,
       nixos-facter-modules,
       ...
@@ -54,23 +48,22 @@
         lib.nixosSystem {
           inherit system;
           specialArgs = { inherit inputs; } // specialArgs;
+
           modules = [
             disko.nixosModules.disko
             lanzaboote.nixosModules.lanzaboote
+
             ./modules/base.nix
-            #./modules/noctalia.nix
             ./hosts/${name}
-            # Module Home Manager (NixOS)
+
+            # Home Manager as NixOS module
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
+
               home-manager.users.qt1 = import ./modules/home.nix;
               home-manager.extraSpecialArgs = { inherit inputs; };
-              home-manager.sharedModules = [
-                niri.homeModules.niri
-                noctalia.homeModules.default
-              ];
             }
           ] ++ extraModules;
         };

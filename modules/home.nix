@@ -1,23 +1,29 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, lib, ... }:
 
 {
-  programs.niri = {
+  imports = [
+    inputs.noctalia.homeModules.default
+  ];
+
+  home = {
+    username = "qt1";
+    homeDirectory = "/home/qt1";
+    stateVersion = "26.05";
+  };
+
+  programs.noctalia = {
     enable = true;
     settings = {
-      prefer-no-csd = true;
-      input.keyboard.xkb = {
-        layout = "us";
-        variant = "intl";
+      theme = {
+        mode = "dark";
+        source = "builtin";
+        builtin = "Catppuccin";
       };
-      layout = {
-        gaps = 4;
-        focus-ring = {
-          enable = true;
-          width = 2;
-          active.color = "#${config.colorScheme.palette.base0D}ff";
-          inactive.color = "#${config.colorScheme.palette.base03}ff";
-        };
+      wallpaper = {
+        enabled = true;
+        default.path = "/path/to/wallpapers/wallpaper.png";
       };
     };
   };
+
 }

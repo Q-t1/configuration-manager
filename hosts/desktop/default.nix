@@ -77,6 +77,7 @@
       git
       zed-editor
       alacritty
+      ghostty
     ];
     hashedPassword = "$6$mX3KybIzvY4Kcl/Y$LN5lcc5iefNmKDSitgRd84GXdJ5VMup/DPLojazNMD8Yj/AAuRxnd0CsYxEmmQX7TEMHBA7AbN96yMWQ25IKY0";
     openssh.authorizedKeys.keys = [
@@ -99,23 +100,12 @@
     };
   };
 
-  services.greetd = {
-    enable = true;
-    settings = {
-      default_session = {
-        command = "${config.programs.niri.package}/bin/niri-session";
-        user = "qt1";
-      };
-    };
-  };
-
-  # Recommended by niri docs when using the user service
+  # Install niri
+  programs.niri.enable = true;
+  # Keep this, as per NixOS wiki
   systemd.user.services.niri.enableDefaultPath = false;
 
-  # Noctalia package
-  environment.systemPackages = with pkgs; [
-    inputs.noctalia.packages.${pkgs.system}.default
-  ];
+
 
   # Install firefox.
   programs.firefox.enable = true;
