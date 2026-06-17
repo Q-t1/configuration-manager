@@ -41,7 +41,7 @@
 
     settings.binds = with config.lib.niri.actions; {
       "Mod+Shift+Slash".action = show-hotkey-overlay;
-      "Mod+T".action           = spawn "alacritty";
+      "Mod+T".action           = spawn "ghostty";
       "Mod+D".action           =
         spawn "noctalia-shell" "ipc" "call" "launcher" "toggle";
     };
@@ -52,17 +52,17 @@
     settings = {
       settingsVersion = 0;
       bar = {
-        barType = "simple";
-        position = "top";
+        barType = "floating";
+        position = "bottom";
         monitors = [ ];
-        density = "default";
+        density = "spacious";
         showOutline = false;
         showCapsule = true;
         capsuleOpacity = 1;
         capsuleColorKey = "none";
         widgetSpacing = 6;
         contentPadding = 2;
-        fontScale = 1;
+        fontScale = 1.2;
         enableExclusionZoneInset = true;
         backgroundOpacity = 0.93;
         useSeparateOpacity = false;
@@ -79,12 +79,6 @@
         widgets = {
           left = [
             {
-              id = "Launcher";
-            }
-            {
-              id = "Clock";
-            }
-            {
               id = "SystemMonitor";
             }
             {
@@ -96,10 +90,13 @@
           ];
           center = [
             {
-              id = "Workspace";
+              id = "Launcher";
             }
           ];
           right = [
+            {
+              id = "Clock";
+            }
             {
               id = "Tray";
             }
@@ -107,13 +104,7 @@
               id = "NotificationHistory";
             }
             {
-              id = "Battery";
-            }
-            {
               id = "Volume";
-            }
-            {
-              id = "Brightness";
             }
             {
               id = "ControlCenter";
@@ -163,7 +154,7 @@
         autoStartAuth = false;
         allowPasswordWithFprintd = false;
         clockStyle = "custom";
-        clockFormat = "hh\nmm";
+        clockFormat = "HH\nmm";
         passwordChars = false;
         lockScreenMonitors = [ ];
         lockScreenBlur = 0;
@@ -300,7 +291,7 @@
         position = "center";
         pinnedApps = [ ];
         sortByMostUsed = true;
-        terminalCommand = "alacritty -e";
+        terminalCommand = "ghostty";
         customLaunchPrefixEnabled = false;
         customLaunchPrefix = "";
         viewMode = "list";
@@ -552,7 +543,7 @@
       };
       colorSchemes = {
         useWallpaperColors = false;
-        predefinedScheme = "Noctalia (default)";
+        predefinedScheme = "Ayu";
         darkMode = true;
         schedulingMode = "off";
         manualSunrise = "06:30";
