@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     disko = {
       url = "github:nix-community/disko";
@@ -8,7 +8,7 @@
     };
 
     lanzaboote = {
-      url = "github:nix-community/lanzaboote/v1.0.0";
+      url = "git+https://github.com/nix-community/lanzaboote?rev=001e560fffc8f0235e9db20ebeb4ccde0ade1caf";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -17,8 +17,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    niri = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     noctalia = {
-      url = "github:noctalia-dev/noctalia";
+      url = "github:noctalia-dev/noctalia/legacy-v4";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -31,6 +36,7 @@
       disko,
       lanzaboote,
       home-manager,
+      niri,
       noctalia,
       nixos-facter-modules,
       ...
@@ -62,7 +68,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
 
-              home-manager.users.qt1 = import ./modules/home.nix;
+              home-manager.users.qt1 = import ./hosts/${name}/home.nix;
               home-manager.extraSpecialArgs = { inherit inputs; };
             }
           ] ++ extraModules;

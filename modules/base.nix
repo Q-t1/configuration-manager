@@ -57,6 +57,8 @@
     trusted-users = [ "qt1" ];
   };
 
+  services.displayManager.ly.enable = true;
+
   services.openssh.enable = true;
 
   environment.systemPackages = map lib.lowPrio [
