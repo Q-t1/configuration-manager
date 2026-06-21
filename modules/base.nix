@@ -1,10 +1,9 @@
 {
   modulesPath,
-  config,
   lib,
   pkgs,
   ...
-} @ args:
+}:
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
@@ -19,7 +18,7 @@
     "sd_mod"
   ];
 
-  boot.initrd.kernelModules = [ "" ];
+  boot.initrd.kernelModules = [ ];
 
   boot.kernelModules = [ "kvm-intel" ];
 
@@ -69,14 +68,6 @@
     pkgs.gitMinimal
     pkgs.bash
     pkgs.tpm2-tss
-  ];
-
-  users.users.qt1.shell = pkgs.bash;
-
-  console.keyMap = "fr";
-
-  users.users.qt1.openssh.authorizedKeys.keys = [
-    "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBBqSbEXb7nSmu2vAl99sDH0Di4YMH0foOiv0XSywfcIAWqqXE7twoateg/1AiVoNSE5nHfLL791XxUcQ5lPYHLM= qt1@nixos"
   ];
 
   system.stateVersion = "26.05";
