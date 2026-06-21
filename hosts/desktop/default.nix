@@ -1,24 +1,14 @@
-{ modulesPath, config, inputs, lib, pkgs, ... } @ args:
+{ pkgs, ... }:
 {
   imports = [
     ./disk-config.nix
   ];
 
-  nix.settings = {
-    extra-substituters = [ "https://noctalia.cachix.org" ];
-    extra-trusted-public-keys = [ "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4=" ];
-  };
-
   networking.hostName = "desktop-qt1";
-  networking.wireless.enable = true;
-
-  # Enable networking
   networking.networkmanager.enable = true;
 
-  # Set time zone.
   time.timeZone = "Europe/Paris";
 
-  # Select internationalisation properties.
   i18n.defaultLocale = "fr_FR.UTF-8";
 
   i18n.extraLocaleSettings = {
@@ -33,26 +23,18 @@
     LC_TIME = "fr_FR.UTF-8";
   };
 
-  # Enable graphics
   hardware.graphics.enable = true;
 
-  # Set NVIDIA as video driver
   services.xserver.videoDrivers = [ "nvidia" ];
 
-  # NVIDIA driver settings
   hardware.nvidia = {
-    # RTX 20-series+ supports open module (required for driver 560+)
     open = true;
-    # Enable kernel mode setting (required for Wayland)
     modesetting.enable = true;
-    # Enable NVIDIA settings tool
     nvidiaSettings = true;
   };
 
-  # Configure console keymap
   console.keyMap = "fr";
 
-  # Enable sound with pipewire.
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -66,6 +48,7 @@
     isNormalUser = true;
     description = "Quentin";
     home = "/home/qt1";
+    shell = pkgs.bash;
     extraGroups = [
       "wheel"
       "networkmanager"
@@ -80,6 +63,7 @@
     ];
     hashedPassword = "$6$mX3KybIzvY4Kcl/Y$LN5lcc5iefNmKDSitgRd84GXdJ5VMup/DPLojazNMD8Yj/AAuRxnd0CsYxEmmQX7TEMHBA7AbN96yMWQ25IKY0";
     openssh.authorizedKeys.keys = [
+      "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBBqSbEXb7nSmu2vAl99sDH0Di4YMH0foOiv0XSywfcIAWqqXE7twoateg/1AiVoNSE5nHfLL791XxUcQ5lPYHLM= qt1@nixos"
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDtASdfLMatnUWsdJIjIvIXqXrnmABAznN/6mji1/rzRLqrusduqahyi4htTRvOuue3vrhUqeywiRTNTpzthfhVqeF5WehE1wAPkbgGwAvxC8ltqLPza6KkfZF0WXdXj/MsKJDTJUwui+acbyJocuMz0teJOhURoaEetXzr+ffj6P9Txz7uX6KN8D2DYGi9WvG8QPdlF/89f5vtCx4GFrKkdSET+yNC3PEcf+X8wDoL+ztuvcTGLb4rC42NzLJ82VCAYZ6KS085s8GD+lcgU/jxpRUeCVoY7Ciym/VKs2oxVsyM45fP+d33BJmqV+WGgVLHz0T4y05HOS6CBLObbXZYLfDg7jNl/MVxVktNRfvPLr23z8IvUL1DR8lHIqc6jesFMe8W5PuaoxwzQIhRl8ywGT/rVq1btMiS41mqo/86pZAFtehTt04A3GbMVGB7NNO3tmaVbUlr/aSFdB/hLr0pU3uuZQsHCipZ/3+IGs7erU1r2VVNhnxd/JcDJEVstd8= quentin@MacBook-Air-de-Quentin.local"
     ];
   };
@@ -99,22 +83,13 @@
     };
   };
 
-  # Install niri
   programs.niri.enable = true;
   # Keep this, as per NixOS wiki
   systemd.user.services.niri.enableDefaultPath = false;
 
-
-
-  # Install firefox.
   programs.firefox.enable = true;
 
-  # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
-
   system.stateVersion = "26.05";
-
 }

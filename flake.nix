@@ -26,8 +26,6 @@
       url = "github:noctalia-dev/noctalia/legacy-v4";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    nixos-facter-modules.url = "github:numtide/nixos-facter-modules";
   };
 
   outputs =
@@ -38,7 +36,6 @@
       home-manager,
       niri,
       noctalia,
-      nixos-facter-modules,
       ...
     }:
     let
@@ -60,9 +57,9 @@
             lanzaboote.nixosModules.lanzaboote
 
             ./modules/base.nix
+            ./modules/noctalia.nix
             ./hosts/${name}
 
-            # Home Manager as NixOS module
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
