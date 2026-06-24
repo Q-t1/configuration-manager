@@ -12,7 +12,7 @@
         monitors = [ ];
         density = "spacious";
         showOutline = false;
-        showCapsule = false;
+        showCapsule = true;
         capsuleOpacity = 1;
         capsuleColorKey = "none";
         widgetSpacing = 6;
@@ -36,11 +36,13 @@
             {
               id = "Launcher";
               useDistroLogo = true;
+              enableColorization = true;
             }
             {
               id = "ActiveWindow";
               maxWidth = 512;
               useFixedWidth = false;
+              showIcon = false;
             }
           ];
           center = [ ];
@@ -83,12 +85,12 @@
         animationSpeed = 1;
         animationDisabled = false;
         compactLockScreen = false;
-        lockScreenAnimations = false;
+        lockScreenAnimations = true;
         lockOnSuspend = true;
         showSessionButtonsOnLockScreen = true;
         showHibernateOnLockScreen = false;
-        enableLockScreenMediaControls = false;
-        enableShadows = true;
+        enableLockScreenMediaControls = true;
+        enableShadows = false;
         enableBlurBehind = true;
         shadowDirection = "bottom_right";
         shadowOffsetX = 2;
@@ -105,8 +107,8 @@
         clockFormat = "dddd d MMMM HH:mm";
         passwordChars = false;
         lockScreenMonitors = [ ];
-        lockScreenBlur = 0;
-        lockScreenTint = 0;
+        lockScreenBlur = 64;
+        lockScreenTint = 0.3;
         keybinds = {
           keyUp = [ "Up" ];
           keyDown = [ "Down" ];

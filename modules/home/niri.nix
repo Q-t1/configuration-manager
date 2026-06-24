@@ -46,6 +46,8 @@
       "Mod+Shift+Slash".action = show-hotkey-overlay;
       "Mod+T".action = spawn "ghostty";
       "Mod+D".action = spawn "noctalia-shell" "ipc" "call" "launcher" "toggle";
+          "Mod+L".action = spawn "noctalia-shell" "ipc" "call" "session" "lock";
+          "Mod+Z".action = spawn "zen";
     };
   };
 }
