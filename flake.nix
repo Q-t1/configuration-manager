@@ -53,7 +53,10 @@
         }:
         lib.nixosSystem {
           inherit system;
-          specialArgs = { inherit inputs; } // specialArgs;
+          specialArgs = {
+            inherit inputs;
+          }
+          // specialArgs;
 
           modules = [
             disko.nixosModules.disko
@@ -71,7 +74,8 @@
               home-manager.users.qt1 = import ./hosts/${name}/home.nix;
               home-manager.extraSpecialArgs = { inherit inputs; };
             }
-          ] ++ extraModules;
+          ]
+          ++ extraModules;
         };
     in
     {
