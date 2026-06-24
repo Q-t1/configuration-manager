@@ -1,4 +1,9 @@
 { pkgs, inputs, ... }:
+let
+  zen-browser = (inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default).overrideAttrs (_: {
+    nativeBuildInputs = [ pkgs.makeWrapper pkgs.copyDesktopItems pkgs.wrapGAppsHook3 ];
+  });
+in
 {
   imports = [
     ./disk-config.nix
@@ -61,7 +66,7 @@
       zed-editor
       ghostty
       claude-code
-      inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
+      zen-browser
     ];
     hashedPassword = "$6$mX3KybIzvY4Kcl/Y$LN5lcc5iefNmKDSitgRd84GXdJ5VMup/DPLojazNMD8Yj/AAuRxnd0CsYxEmmQX7TEMHBA7AbN96yMWQ25IKY0";
     openssh.authorizedKeys.keys = [
@@ -85,7 +90,7 @@
     };
   };
 
-  environment.shellAliases.zen = "zen-browser";
+  environment.shellAliases.zen-browser = "zen";
 
   environment.etc."zen-browser/policies/policies.json".text = builtins.toJSON {
     policies = {
