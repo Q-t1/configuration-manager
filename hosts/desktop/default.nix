@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 {
   imports = [
     ./disk-config.nix
@@ -60,6 +60,8 @@
       git
       zed-editor
       ghostty
+      claude-code
+      inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     ];
     hashedPassword = "$6$mX3KybIzvY4Kcl/Y$LN5lcc5iefNmKDSitgRd84GXdJ5VMup/DPLojazNMD8Yj/AAuRxnd0CsYxEmmQX7TEMHBA7AbN96yMWQ25IKY0";
     openssh.authorizedKeys.keys = [
@@ -83,11 +85,23 @@
     };
   };
 
+  environment.shellAliases.zen = "zen-browser";
+
+  environment.etc."zen-browser/policies/policies.json".text = builtins.toJSON {
+    policies = {
+      Homepage = {
+        URL = "https://www.google.com";
+        StartPage = "homepage";
+      };
+      DefaultSearchProviderEnabled = true;
+      DefaultSearchProviderName = "Google";
+      DefaultSearchProviderSearchURL = "https://www.google.com/search?q={searchTerms}";
+    };
+  };
+
   programs.niri.enable = true;
   # Keep this, as per NixOS wiki
   systemd.user.services.niri.enableDefaultPath = false;
-
-  programs.firefox.enable = true;
 
   nixpkgs.config.allowUnfree = true;
 
