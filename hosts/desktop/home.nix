@@ -3,6 +3,7 @@
   imports = [
     ../../modules/home/niri.nix
     ../../modules/home/noctalia.nix
+    ../../modules/home/firefox.nix
   ];
 
   home = {

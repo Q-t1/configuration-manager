@@ -33,13 +33,7 @@
         right = 0;
       };
 
-      spawn-at-startup = [
-        {
-          command = [
-            "${lib.getExe inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default}"
-          ];
-        }
-      ];
+      hotkey-overlay.skip-at-startup = true;
     };
 
     settings.binds = with config.lib.niri.actions; {

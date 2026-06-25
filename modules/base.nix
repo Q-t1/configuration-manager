@@ -56,7 +56,15 @@
     trusted-users = [ "qt1" ];
   };
 
-  services.displayManager.ly.enable = true;
+  services.displayManager.ly = {
+    enable = true;
+    settings = {
+      animation = "doom";
+      bg = "0x00000000";
+      fg = "0x00FFFFFF";
+      clock = "%H:%M";
+    };
+  };
 
   services.openssh.enable = true;
 

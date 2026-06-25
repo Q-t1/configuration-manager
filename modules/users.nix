@@ -1,15 +1,4 @@
-{ pkgs, inputs, ... }:
-let
-  zen-browser =
-    (inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default).overrideAttrs
-      (_: {
-        nativeBuildInputs = [
-          pkgs.makeWrapper
-          pkgs.copyDesktopItems
-          pkgs.wrapGAppsHook3
-        ];
-      });
-in
+{ pkgs, ... }:
 {
   users.users."qt1" = {
     isNormalUser = true;
@@ -28,7 +17,6 @@ in
       zed-editor
       ghostty
       claude-code
-      zen-browser
     ];
     hashedPassword = "$6$mX3KybIzvY4Kcl/Y$LN5lcc5iefNmKDSitgRd84GXdJ5VMup/DPLojazNMD8Yj/AAuRxnd0CsYxEmmQX7TEMHBA7AbN96yMWQ25IKY0";
     openssh.authorizedKeys.keys = [

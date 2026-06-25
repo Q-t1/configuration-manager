@@ -6,8 +6,9 @@
     ../../modules/locale.nix
     ../../modules/networking.nix
     ../../modules/users.nix
-    ../../modules/zen.nix
+    ../../modules/firefox.nix
     ../../modules/fonts.nix
+    ../../modules/gaming.nix
   ];
 
   networking.hostName = "desktop-qt1";

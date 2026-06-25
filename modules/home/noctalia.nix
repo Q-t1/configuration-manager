@@ -1,4 +1,4 @@
-{ inputs, pkgs, ... }:
+{ inputs, pkgs, lib, ... }:
 {
   imports = [ inputs.noctalia.homeModules.default ];
 
@@ -326,7 +326,7 @@
         onlySameOutput = true;
         monitors = [ ];
         pinnedApps = [
-          "zen.desktop"
+          "firefox.desktop"
           "dev.zed.Zed.desktop"
         ];
         colorizeIcons = false;
@@ -550,5 +550,19 @@
         monitorWidgets = [ ];
       };
     };
+  };
+
+  systemd.user.services.noctalia-shell = {
+    Unit = {
+      Description = "Noctalia Shell";
+      After = [ "graphical-session.target" ];
+      PartOf = [ "graphical-session.target" ];
+    };
+    Service = {
+      ExecStart = lib.getExe inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default;
+      Restart = "on-failure";
+      RestartSec = "2";
+    };
+    Install.WantedBy = [ "graphical-session.target" ];
   };
 }
