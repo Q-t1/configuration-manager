@@ -28,8 +28,7 @@
     };
   };
 
-  programs.niri.enable = true;
-  systemd.user.services.niri.enableDefaultPath = false;
+  programs.hyprland.enable = true;
 
   nixpkgs.config.allowUnfree = true;
   system.stateVersion = "26.05";

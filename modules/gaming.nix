@@ -7,4 +7,8 @@
   };
 
   programs.gamemode.enable = true;
+
+  hardware.graphics.enable32Bit = true;
+
+  programs.xwayland.enable = true;
 }

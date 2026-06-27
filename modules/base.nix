@@ -59,7 +59,10 @@
   services.displayManager.ly = {
     enable = true;
     settings = {
-      animation = "doom";
+      animation = "colormix";
+      colormix_col1 = "0x00000000";
+      colormix_col2 = "0x00110033";
+      colormix_col3 = "0x20000000";
       bg = "0x00000000";
       fg = "0x00FFFFFF";
       clock = "%H:%M";

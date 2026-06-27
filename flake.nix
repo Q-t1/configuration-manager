@@ -17,13 +17,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    niri = {
-      url = "github:sodiboo/niri-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    noctalia = {
-      url = "github:noctalia-dev/noctalia/legacy-v4";
+    dms = {
+      url = "github:AvengeMedia/DankMaterialShell/stable";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -34,8 +29,7 @@
       disko,
       lanzaboote,
       home-manager,
-      niri,
-      noctalia,
+      dms,
       ...
     }:
     let
@@ -60,13 +54,13 @@
             lanzaboote.nixosModules.lanzaboote
 
             ./modules/base.nix
-            ./modules/noctalia.nix
             ./hosts/${name}
 
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
+              home-manager.backupFileExtension = "hm-backup";
 
               home-manager.users.qt1 = import ./hosts/${name}/home.nix;
               home-manager.extraSpecialArgs = { inherit inputs; };
