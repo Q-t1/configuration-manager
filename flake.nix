@@ -21,6 +21,11 @@
       url = "github:AvengeMedia/DankMaterialShell/stable";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    hyprshell = {
+      url = "github:H3rmt/hyprshell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -52,6 +57,8 @@
           modules = [
             disko.nixosModules.disko
             lanzaboote.nixosModules.lanzaboote
+            dms.nixosModules.dank-material-shell
+            dms.nixosModules.greeter
 
             ./modules/base.nix
             ./hosts/${name}

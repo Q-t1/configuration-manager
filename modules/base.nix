@@ -56,17 +56,18 @@
     trusted-users = [ "qt1" ];
   };
 
-  services.displayManager.ly = {
+  users.users.greeter = {
+    isSystemUser = true;
+    group = "greeter";
+  };
+  users.groups.greeter = { };
+
+  services.greetd.settings.default_session.user = lib.mkDefault "greeter";
+
+  programs.dank-material-shell.greeter = {
     enable = true;
-    settings = {
-      animation = "colormix";
-      colormix_col1 = "0x00000000";
-      colormix_col2 = "0x00110033";
-      colormix_col3 = "0x20000000";
-      bg = "0x00000000";
-      fg = "0x00FFFFFF";
-      clock = "%H:%M";
-    };
+    compositor.name = "hyprland";
+    configHome = "/home/qt1";
   };
 
   services.openssh.enable = true;

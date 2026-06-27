@@ -3,6 +3,10 @@
   xdg.configFile."hypr/hyprland.lua" = {
     force = true;
     text = ''
+    -- Cursor
+    hl.env("XCURSOR_THEME", "Bibata-Modern-Classic")
+    hl.env("XCURSOR_SIZE", "24")
+
     -- NVIDIA
     hl.env("LIBVA_DRIVER_NAME", "nvidia")
     hl.env("XDG_SESSION_TYPE", "wayland")
@@ -12,7 +16,7 @@
     hl.env("ELECTRON_OZONE_PLATFORM_HINT", "auto")
 
     -- Monitor
-    hl.monitor({ output = "DP-1", mode = "3440x1440@120", position = "0x0", scale = 1.1 })
+    hl.monitor({ output = "DP-1", mode = "3440x1440@120", position = "0x0", scale = 1 })
 
     -- Core config
     hl.config({
@@ -109,7 +113,8 @@
     -- Activate the systemd graphical session so DMS and other user
     -- services start (WantedBy = graphical-session.target).
     hl.on("hyprland.start", function()
-      hl.exec_cmd("${pkgs.dbus}/bin/dbus-update-activation-environment --systemd DISPLAY HYPRLAND_INSTANCE_SIGNATURE WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE && systemctl --user stop hyprland-session.target && systemctl --user start hyprland-session.target")
+      hl.exec_cmd("${pkgs.dbus}/bin/dbus-update-activation-environment --systemd DISPLAY HYPRLAND_INSTANCE_SIGNATURE WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE && systemctl --user start graphical-session.target")
+      hl.exec_cmd("hyprshell run")
     end)
   '';
   };
